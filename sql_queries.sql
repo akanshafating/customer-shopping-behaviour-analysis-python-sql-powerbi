@@ -2,31 +2,31 @@ USE customer_behavior;
 SELECT * FROM customer;
 SELECT * FROM customer LIMIT 5;
 
--- question 1
+-- Query 1
 SELECT gender,
        SUM(purchase_amount) AS revenue
 FROM customer
 GROUP BY gender;
 
--- question 2
+-- Query 2
 select customer_id, purchase_amount
 from customer
 where discount_applied = 'yes' and  purchase_amount >= (select AVG(purchase_amount) from customer);
 
--- question3
+-- Query 3
 select item_purchased, ROUND(AVG(review_rating),2) as "average product rating"
 from customer
 group by item_purchased
 order by  avg(review_rating) desc
 limit 5;
 
--- qestioin4
+-- Query 4
 select shipping_type, ROUND(AVG(purchase_amount),2)
 from customer
 where shipping_type in ('standard','Express')
 group by shipping_type;
 
--- question 5
+-- Query 5
 select subscription_status,
 COUNT(customer_id) as total_customers,
 ROUND(AVG(purchase_amount),2) as avg_spend,
@@ -35,7 +35,7 @@ from customer
 group by subscription_status
 order by total_revenue, avg_spend desc;
 
--- question 6
+-- Query 6
 select item_purchased,
 ROUND(100*SUM(CASE WHEN discount_applied = 'YES' THEN 1  ELSE 0 END)/ COUNT(*),2) AS DISCOUNT_RATE
 from customer
@@ -43,7 +43,7 @@ group by item_purchased
 order by discount_rate desc
 limit 5;
 
--- question 7
+-- Query 7
 WITH customer_type as (
 select customer_id, previous_purchases,
 CASE
@@ -57,7 +57,7 @@ select customer_segment, count(*) as "Number of  Customers"
 From customer_type
 group by  customer_segment;
 
--- question 8
+-- Query 8
 
 with item_counts as (
 select category,
@@ -71,7 +71,7 @@ select item_rank , category, item_purchased, total_orders
 from item_counts
 where item_rank <= 3;
 
--- Question 9
+-- Query 9
 select subscription_status,
 count(customer_id) as repeat_buyers
 from customer
